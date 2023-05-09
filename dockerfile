@@ -12,6 +12,9 @@ RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc |  tee /etc/apt/
 RUN add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2022.list)"
 RUN apt-get update && apt-get install -y mssql-server
 RUN apt-get  autoclean -y 
+RUN apt-get clean autoclean
+RUN apt-get autoremove --yes
+RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # creating directories
 RUN mkdir /var/opt/sqlserver
