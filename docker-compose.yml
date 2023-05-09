@@ -1,11 +1,12 @@
 version: '3.8'
 services:
-  identity-database:
+  mssql:
+    image: ${TAG:-latest}
     build:
       context: .
       dockerfile: dockerfile
     ports:
-      - "1433:1433"
+      - 1433:1433
     env_file:
       -  .env
     volumes:
