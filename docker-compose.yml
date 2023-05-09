@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  identity-database:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "1433:1433"
+    env_file:
+      -  .env
+    volumes:
+      - sqlsystem:/var/opt/mssql/
+      - sqldata:/var/opt/sqlserver/data
+      - sqllog:/var/opt/sqlserver/log
+      - sqlbackup:/var/opt/sqlserver/backup
+      - sqlconfig:/opt/mssql/bin/mssql-conf 
+volumes:
+  sqlsystem:
+  sqldata:
+  sqllog:
+  sqlbackup:
+  sqlconfig:
