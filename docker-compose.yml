@@ -1,30 +1,26 @@
 version: '3.8'
 services:
   mssql:
-    image: ${TAG:-latest}
+    image: mcr.microsoft.com/mssql/server:2022-latest
     hostname: mssql
-    build:
-      context: .
-      dockerfile: dockerfile
     ports:
       - 1433:1433
     env_file:
       -  .env
     volumes:
-      - sqlsystem:/var/opt/mssql/
+      - sqlsystem:/var/opt/mssql/ # or /var/opt/sqlserver
       - sqldata:/var/opt/sqlserver/data
       - sqllog:/var/opt/sqlserver/log
       - sqlbackup:/var/opt/sqlserver/backup
-      - ${pwd}/mssql-conf.config:/opt/mssql/bin/mssql-conf.config
+      - ${PWD}/mssql-conf.config:/opt/mssql/bin/mssql-conf.config
       
-
   sqlpad:
-    # To use Dockerfile at root of this project, use build instead of image
-    # build: ../../
     image: sqlpad/sqlpad:latest
     hostname: 'sqlpad'
     ports:
       - 3000:3000
+    env_file:
+      -  .env
     environment:
       SQLPAD_ADMIN: 'admin@sqlpad.com'
       SQLPAD_ADMIN_PASSWORD: 'admin'
