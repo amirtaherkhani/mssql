@@ -15,7 +15,7 @@ services:
       - sqldata:/var/opt/sqlserver/data
       - sqllog:/var/opt/sqlserver/log
       - sqlbackup:/var/opt/sqlserver/backup
-      # - ${pwd}/mssql-conf.config:/opt/mssql/bin/mssql-conf.config
+      - ${pwd}/mssql-conf.config:/opt/mssql/bin/mssql-conf.config
       
 
   sqlpad:
