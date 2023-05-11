@@ -3,37 +3,44 @@ services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     hostname: mssql
+    container_name: mssql
     ports:
       - 1433:1433
     env_file:
-      -  .env
+      - .env
     user: root
-    restart: always
+    restart: no
     healthcheck:
-        test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P ${MSSQL_SA_PASSWORD} -Q 'SELECT 1' || exit 1"]
-        interval: 10s
-        retries: 10
-        start_period: 10s
-        timeout: 3s     
-         
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P ${MSSQL_SA_PASSWORD} -Q 'SELECT 1' || exit 1"
+        ]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+
     volumes:
       - sqlsystem:/var/opt/mssql/ # or /var/opt/sqlserver
       - sqldata:/var/opt/sqlserver/data
       - sqllog:/var/opt/sqlserver/log
       - sqlbackup:/var/opt/sqlserver/backup
-      
+
   sqlpad:
     image: sqlpad/sqlpad:latest
     hostname: 'sqlpad'
+    container_name: sqlpad
     ports:
       - 80:3000
     env_file:
-      -  .env
+      - .env
     healthcheck:
-      test: curl --fail http://localhost:3000 || exit 1
-      interval: 30s
-      timeout: 10s
+      test: curl --fail http://sqlpad:3000 || exit 1 // TODO not working 
+      interval: 60s
       retries: 5
+      start_period: 10s
+      timeout: 10s
     depends_on:
       mssql:
         condition: service_healthy
