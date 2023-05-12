@@ -4,6 +4,11 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     hostname: mssql
     container_name: mssql
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    networks:
+      - default
+      - external-network
     ports:
       - 1433:1433
     env_file:
@@ -29,12 +34,15 @@ services:
 
   sqlpad:
     image: sqlpad/sqlpad:latest
-    hostname: 'sqlpad'
+    hostname: sqlpad
     container_name: sqlpad
     ports:
       - 80:3000
     env_file:
       - .env
+    networks:
+      - default
+      - external-network
     healthcheck:
       test: curl --fail http://sqlpad:3000 || exit 1 // TODO not working 
       interval: 60s
@@ -57,6 +65,12 @@ services:
       SQLPAD_CONNECTIONS__sqlserverdemo__password: ${MSSQL_SA_PASSWORD:-}
     volumes:
       - sqlpad-volume:/var/lib/sqlpad
+
+networks:
+  default:
+    name :  mssql-bridge
+  external-network:
+     name: kara-network
 
 volumes:
   sqlsystem:
