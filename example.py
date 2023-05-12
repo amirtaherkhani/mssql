@@ -3,9 +3,9 @@ import pandas as pd
 import names
 
 
-def generate_data()->list:
+def generate_data(count:int)->list:
 	list_name=[]
-	for x in range(0, 5):
+	for x in range(0, count):
 		list_name.append((names.get_full_name(gender='male'),"male"))	
 		list_name.append((names.get_full_name(gender='female'),"female"))	
 	return pd.DataFrame.from_records(list_name, columns =['name', 'gender'])
@@ -59,7 +59,7 @@ if not exists (select * from sysobjects where name='persons' and xtype='U')
 
 ## write data as df 
 
-df=generate_data()
+df=generate_data(20000)
 
 # data most be list of tupe ->> [(),(),...()]
 cursor.executemany("""
