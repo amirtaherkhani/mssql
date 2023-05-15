@@ -67,7 +67,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: "db-redis"
+    container_name: "redis"
     expose:
       - 6379
     stdin_open: true # docker run -i
@@ -90,6 +90,7 @@ networks:
 
 volumes:
   sqlsystem:
+    
   sqldata:
   sqllog:
   sqlbackup:
