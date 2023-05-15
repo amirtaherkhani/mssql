@@ -54,11 +54,7 @@ if not exists (select * from sysobjects where name='persons' and xtype='U')
 	)
 """)
 
-
-
-
 ## write data as df 
-
 df=generate_data(20000)
 
 # data most be list of tupe ->> [(),(),...()]
