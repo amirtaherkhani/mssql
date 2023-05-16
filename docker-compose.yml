@@ -27,10 +27,10 @@ services:
       timeout: 3s
 
     volumes:
-      - sqlsystem:/var/opt/mssql/ # or /var/opt/sqlserver
-      - sqldata:/var/opt/sqlserver/data
-      - sqllog:/var/opt/sqlserver/log
-      - sqlbackup:/var/opt/sqlserver/backup
+      - mssql-system:/var/opt/mssql/ # or /var/opt/sqlserver
+      - mssql-data:/var/opt/sqlserver/data
+      - mssql-log:/var/opt/sqlserver/log
+      - mssql-backup:/var/opt/sqlserver/backup
 
   sqlpad:
     image: sqlpad/sqlpad:latest
@@ -62,7 +62,7 @@ services:
       SQLPAD_CONNECTIONS__sqlserverdemo__username: sa
       SQLPAD_CONNECTIONS__sqlserverdemo__password: ${MSSQL_SA_PASSWORD:-}
     volumes:
-      - sqlpad-volume:/var/lib/sqlpad
+      - mssql-pad-volume:/var/lib/sqlpad
 
 
   redis:
@@ -94,5 +94,5 @@ volumes:
   mssql-log:
   mssql-backup:
   mssql-config:
-  sqlpad-volume:
+  mssql-pad-volume:
   
