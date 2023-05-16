@@ -67,7 +67,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: "redis"
+    container_name: "mssql-redis"
     expose:
       - 6379
     stdin_open: true # docker run -i
@@ -89,11 +89,10 @@ networks:
      name: kara-network
 
 volumes:
-  sqlsystem:
-    
-  sqldata:
-  sqllog:
-  sqlbackup:
-  sqlconfig:
+  mssql-system:
+  mssql-data:
+  mssql-log:
+  mssql-backup:
+  mssql-config:
   sqlpad-volume:
   
